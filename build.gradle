@@ -1,0 +1,37 @@
+plugins {
+    id("io.micronaut.application") version "4.0.2"
+}
+
+version = "0.1"
+group = "com.example"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("io.micronaut.multitenancy:micronaut-multitenancy")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    testImplementation("io.micronaut:micronaut-http-client")
+}
+
+
+application {
+    mainClass.set("com.example.Application")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.example.*")
+    }
+}
